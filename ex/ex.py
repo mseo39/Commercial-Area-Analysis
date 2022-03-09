@@ -52,3 +52,23 @@ for i in living_population["상권_코드"]:
 #ascending=False 내림차순으로 정렬하기 위해 사용
 df_sorted_by_values = living_population.sort_values(by="생활인구-상주인구" ,ascending=False)
 df_sorted_by_values
+
+from pyproj import Transformer
+
+commercial_district=pd.read_csv("서울시 우리마을가게 상권분석서비스(상권영역).csv",encoding = 'cp949')
+#위도는 y좌표 경도는 x좌표
+
+
+# EPSG:5181을 EPSG:4326(위경도)로 변환하기
+
+x_list=[]
+y_list=[]
+for i,row in commercial_district.iterrows():
+    TRAN_4326_TO_3857 = Transformer.from_crs("EPSG:5181", "EPSG:4326")
+    x, y = TRAN_4326_TO_3857.transform(row["엑스좌표_값"],row["와이좌표_값"] ) # 변환하는 과정
+    x_list.append(x)
+    y_list.append(y)
+    
+commercial_district["위도"]=y_list
+commercial_district["경도"]=x_list
+commercial_district
