@@ -1,0 +1,71 @@
+version: '3'
+services:
+  market:
+    build:
+      context:  /home/hadoop/mseo/location/market/mysite  # Dockerfile의 경로 (프로젝트 루트 디렉토리에서 실행)
+    image: market  # 이미지 이름과 태그
+    ports:
+      - "8880:8000"  # 호스트 포트:컨테이너 포트
+    environment:
+      - DJANGO_SETTINGS_MODULE=mysite.settings
+    volumes:
+      - /home/hadoop/mseo/location/market/mysite:/srv/market  # 볼륨 마운트 설정
+    networks:
+      - mynetwork  # 기존의 mynetwork 네트워크에 연결
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_USER=guest
+      - RABBITMQ_PASSWORD=guest
+      - TZ=Asia/Seoul  # 한국 시간대로 설정
+    ports:
+      - "5672:5672" # Default Port
+      - "15672:15672" # For UI
+    expose:
+      - "15672"
+    networks:
+      - mynetwork  # 기존의 mynetwork 네트워크에 연결
+
+  celery_beat:
+    restart: always
+    build:
+      context: /home/hadoop/mseo/location/market/mysite
+    command: "celery -A mysite beat --loglevel=info"
+    environment:
+      - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq
+    depends_on:
+      - rabbitmq
+      - market
+      - celery_worker
+    networks:
+      - mynetwork
+
+  celery_worker:
+    restart: always
+    build:
+      context: /home/hadoop/mseo/location/market/mysite
+    command: "celery -A mysite worker --loglevel=info"
+    environment:
+      - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq
+    depends_on:
+      - market
+      - rabbitmq
+    networks:
+      - mynetwork
+
+  flower:
+      image: mher/flower
+      environment:
+        - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq
+        - FLOWER_PORT=5555
+      ports:
+        - 5555:5555
+      networks:
+        - mynetwork
+
+networks:
+  mynetwork:
+    external:
+      name: mynetwork  # 기존의 mynetwork 네트워크와 연결

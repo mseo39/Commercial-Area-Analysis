@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+  <html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>상권분석 서비스</title>
+        <link rel="stylesheet" href="{% static 'css/data_upload.css' %}">
+    </head>
+    <body>
+        <header>
+            <div class="wrapper">
+                <h3>상권분석 서비스</h3>
+                <a href="#" class="member"><p class="member">로그인</p></a>
+                <a href="#"class="member"><p class="member">회원가입</p></a>
+                <a href="#"class="member"><p class="member">로그아웃</p></a>
+            </div>
+        </header>
+        <div id="main_wrap" >
+            <div id="list">
+                <ul>
+                    <a href="#"><li id="main_title">파일 업로드</li></a>
+                    <a href="#"><li>진행</li></a>
+                    <a href="#"><li>결과</li></a>
+                </ul>
+            </div>
+            <div id="wrap"></div>
+            <div id="table_wrap">
+                <p class="title">파일 업로드</p>
+                <form action="upload_file" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input class="txt_input" type="text" placeholder="국가명" name="country">
+                    <input class="txt_input" type="text" placeholder="도시명" name="city">
+                    <table id="table">
+                        <th width="40%">데이터 종류</th>
+                        <th>파일 올리기</th>
+                        <tr>
+                            <td>상권영역(필수)</td>
+                            <td><input type="file" name="file[]" id="commercial_district"></td>
+                        </tr>
+                        <tr>
+                            <td>점포</td>
+                            <td><input type="file" name="file[]" id="market"></td>
+                        </tr>
+                        <tr>
+                            <td>추정매출</td>
+                            <td><input type="file" name="file[]" id="sales"></td>
+                        </tr>
+                        <tr>
+                            <td>소득소비</td>
+                            <td><input type="file" name="file[]" id="income_consumption"></td>
+                        </tr>
+                        <tr>
+                            <td>상권변화지표</td>
+                            <td><input type="file" name="file[]" id="commercial district_change"></td>
+                        </tr>
+                        <tr>
+                            <td>아파트</td>
+                            <td><input type="file" name="file[]" id="apart"></td>
+                        </tr>
+                        <tr>
+                            <td>인구</td>
+                            <td><input type="file" name="file[]" id="people"></td>
+                        </tr>
+                    </table>
+                    <input id="submit" type="submit">
+                </form>
+            </div>
+        </div>
+        </div>
+
+    </body>
+
+  </html>
