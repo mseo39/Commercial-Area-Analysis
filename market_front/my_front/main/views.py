@@ -38,11 +38,24 @@ def get_trdar_cd(request):
         if response.status_code == 200:
             # JSON 데이터 추출
             data = response.json()
-            count = data.get('total_store_num', 0)
-            print(f'서버로부터 받은 count: {count}')
+
+            # 나머지 데이터에 대한 처리
+            commercial_data = data.get('commercial_data', {})
+            store_data = data.get('store_data', 0)
+            revenue_data = data.get('revenue_data', [])
+            apart_data = data.get('apart_data', [])
+            population_data = data.get('population_data', [])
+
+            # 데이터 활용
+            print(f'Commercial Data: {commercial_data}')
+            print(f'Store Data: {store_data}')
+            print(f'Revenue Data: {revenue_data}')
+            print(f'Apart Data: {apart_data}')
+            print(f'Population Data: {population_data}')
+
         else:
             print(f'요청이 실패하였습니다. 상태 코드: {response.status_code}')
-    return render(request, 'map.html')
+        return render(request, 'map.html')
 
 @csrf_exempt
 def upload_file(request):

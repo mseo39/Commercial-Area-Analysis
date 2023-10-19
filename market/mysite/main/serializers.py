@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from main.models import Commercial_data, Store_data,Sales_data,Apart_data,Population_data
+from main.models import Commercial_data, Store_data,Revenue_data,Apart_data,Population_data
 
 class commercial_dataSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,9 +11,9 @@ class store_dataSerializer(serializers.ModelSerializer):
         model = Store_data
         fields='__all__'
 
-class sales_dataSerializer(serializers.ModelSerializer):
+class Revenue_dataSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Sales_data
+        model=Revenue_data
         fields='__all__'
 
 class apart_dataSerializer(serializers.ModelSerializer):
@@ -23,5 +23,5 @@ class apart_dataSerializer(serializers.ModelSerializer):
 
 class population_dataSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Population_data
+        model = Population_data
         fields='__all__'

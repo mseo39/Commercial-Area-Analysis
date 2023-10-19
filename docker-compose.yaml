@@ -49,6 +49,8 @@ services:
     command: "celery -A mysite worker --loglevel=info"
     environment:
       - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq
+    volumes:
+      - /home/hadoop/mseo/location/market/mysite:/srv/market  # 볼륨 마운트 설정
     depends_on:
       - market
       - rabbitmq

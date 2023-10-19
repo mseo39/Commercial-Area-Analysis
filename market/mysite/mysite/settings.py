@@ -122,7 +122,7 @@ DATABASES = {
         'NAME': 'market',  # MongoDB 데이터베이스 이름
         'ENFORCE_SCHEMA': True,
         'CLIENT': {
-            'host': '172.18.0.2:27017',  # mongos 컨테이너의 이름 또는 IP 주소 및 포트
+            'host': '172.18.0.7:27017',  # mongos 컨테이너의 이름 또는 IP 주소 및 포트
         }
     }
 }
