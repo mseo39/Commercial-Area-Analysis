@@ -63,7 +63,7 @@ def get_commercial_data(request):
 
             # Revenue_data: commercial_code가 일치하면서 필요한 필드들을 가져옵니다.
             revenue_data = Revenue_data.objects.filter(commercial=commercial_data).values(
-                'service_code','quarterly_sales', 'male_sales_ratio', 'female_sales_ratio'
+                'service_name','quarterly_sales', 'male_sales_ratio', 'female_sales_ratio'
             )
 
             # Apart_data: commercial_code가 일치하면서 모든 필드를 가져옵니다.
