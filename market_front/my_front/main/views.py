@@ -3,12 +3,11 @@ import requests
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
+import logging
+logger = logging.getLogger(__name__)
 
-def main(request):
-    return render(request, 'map.html')
 
 def data_upload(request):
-
     return render(request, 'data_upload.html')
 
 def data_result(request):
@@ -17,9 +16,8 @@ def data_result(request):
 def data_process(request):
     return render(request, 'data_process.html')
 
-
-import logging
-logger = logging.getLogger(__name__)
+def main(request):
+    return render(request, 'map.html')
     
 def get_trdar_cd(request):
     if request.method == 'GET':
@@ -53,9 +51,11 @@ def get_trdar_cd(request):
             print(f'Apart Data: {apart_data}')
             print(f'Population Data: {population_data}')
 
+            return render(request, 'map.html',{'commercial_data':'commercial_data', 'store_data':store_data, 'revenue_data': revenue_data,'apart_data':apart_data,'population_data':population_data})
         else:
             print(f'요청이 실패하였습니다. 상태 코드: {response.status_code}')
-        return render(request, 'map.html')
+
+    return render(request, 'map.html')
 
 @csrf_exempt
 def upload_file(request):
