@@ -82,11 +82,7 @@ def get_commercial_data(request):
                 'commercial_data': {
                     'nation': commercial_data.nation,
                     'city': commercial_data.city,
-                    'commercial_name': commercial_data.commercial_name,
-                    'x': commercial_data.x,
-                    'y': commercial_data.y,
-                    'county_code': commercial_data.county_code,
-                    'administrative_code': commercial_data.administrative_code,
+                    'commercial_name': commercial_data.commercial_name
                 },
                 'store_data': store_data,
                 'revenue_data': list(revenue_data),  # QuerySet을 리스트로 변환
