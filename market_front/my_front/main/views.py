@@ -79,19 +79,3 @@ def upload_file(request):
         response=requests.post(url=url, files = data, data={"name":upload_name, "country":request.POST["country"], "city":request.POST["city"] })
 
     return redirect("main")
-            
-def upload(request):
-    if request.method=='POST':
-        file=request.FILES['file']
-        
-        # 파이썬 딕셔너리 형식으로 file 설정
-        upload = {'file':file}
-
-        # String 포맷
-        obj={"temperature":'23.5', "humidity":'54.5'}
-
-        url="http://127.0.0.1:8000/api/test"
-
-        response=requests.post(url, files = upload, data = obj)
-
-    return redirect("main")
