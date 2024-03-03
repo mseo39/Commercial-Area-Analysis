@@ -1,3 +1,5 @@
+[학사논문 읽기](https://github.com/mseo39/Commercial-Area-Analysis/blob/main/%EC%83%81%EA%B6%8C%EB%B6%84%EC%84%9D%EC%84%9C%EB%B9%84%EC%8A%A4_%EB%85%BC%EB%AC%B8_%EA%B0%95%EB%AF%BC%EC%84%9C.pdf)
+
 # 상권분석 서비스
 * 상권분석에 집중한 프로젝트가 아님을 알려드립니다
 * 상권분석을 위한 분산 빅데이터 서비스 시스템 구현
