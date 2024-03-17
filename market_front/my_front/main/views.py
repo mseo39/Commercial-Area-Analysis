@@ -58,24 +58,36 @@ def get_trdar_cd(request):
     return render(request, 'map.html')
 
 @csrf_exempt
+# 파일 업로드를 처리하는 Django 뷰 함수
 def upload_file(request):
-    file_name=["commercial_district", "market", "sales", "income_consumption", "commercial district_change", "apart", "people"]
-    if request.method=="POST":
-        files=request.FILES.getlist('file[]')
-        # 파이썬 딕셔너리 형식으로 file 설정
+    # 업로드된 파일에 대한 예상 이름을 포함한 리스트
+    file_name = ["commercial_district", "market", "sales", "income_consumption", "commercial district_change", "apart", "people"]
+
+    # HTTP 요청이 POST 방식으로 들어왔는지 확인
+    if request.method == "POST":
+        # 파일 업로드 요청에서 'file[]' 필드에 대한 파일 목록을 가져옴
+        files = request.FILES.getlist('file[]')
+
+        # 업로드할 파일을 담을 딕셔너리 초기화
         data = {}
-        upload_name=""
-        i=0
+        # 업로드된 파일들의 이름을 쉼표로 구분하여 저장할 변수 초기화
+        upload_name = ""
+        i = 0
+
+        # 파일 목록을 순회하면서 파일을 딕셔너리에 추가하고 업로드된 파일들의 이름을 쉼표로 연결하여 저장
         for file in files:
             print(file)
-            if file!="":
-                data[str(file).split(".")[0]]=file
-                upload_name=upload_name+str(file).split(".")[0]+","
-                i+=1
+            if file != "":
+                data[str(file).split(".")[0]] = file
+                upload_name = upload_name + str(file).split(".")[0] + ","
+                i += 1
 
-        url="http://220.69.209.126:8880/api/upload_file"
-        # print(upload_name)
-        # print(upload)
-        response=requests.post(url=url, files = data, data={"name":upload_name, "country":request.POST["country"], "city":request.POST["city"] })
+        # 업로드할 URL 설정
+        url = "http://220.69.209.126:8880/api/upload_file"
 
+        # 설정한 URL에 파일과 함께 데이터를 POST 방식으로 전송
+        # 업로드할 파일을 담은 딕셔너리, 각 파일은 키로 지정된 이름으로 서버에 전송됨
+        response = requests.post(url=url, files=data, data={"name": upload_name, "country": request.POST["country"], "city": request.POST["city"]})
+
+    # 파일 업로드가 완료되면 'main' 페이지로 리다이렉트
     return redirect("main")
